@@ -5,7 +5,12 @@ run.prop <-
       run.props(basedir),
       function (props) {
         if (is.list(props)) {
-          return (props[[propname]])
+          p <- props[[propname]]
+          if (is.null(p)) {
+            return (NA)
+          } else {
+            return (p)
+          }
         } else {
           return (NA)
         }

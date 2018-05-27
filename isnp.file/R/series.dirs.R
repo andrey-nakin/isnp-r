@@ -1,4 +1,4 @@
-# returns vector of series directories
+# returns 2d array of series directories
 series.dirs <-
   function(basedir) {
     rundirs <- run.dirs(basedir)
