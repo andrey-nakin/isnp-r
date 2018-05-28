@@ -5,3 +5,4 @@ Description: Plotting functions for processing the results of ISNP experiments
 License: MIT
 Author: Andrey Nakin <andrey.nakin@gmail.com>
 Maintainer: Andrey Nakin <andrey.nakin@gmail.com>
+Imports: stats

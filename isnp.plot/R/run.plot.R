@@ -6,7 +6,6 @@ run.plot <-
       col = plot.colors();
     }
     
-    all.values <- vector(mode="numeric", length=0)
     d <- lapply(
       seq(from = 1, to = length(data), by = 1),
       function(runNo) {
