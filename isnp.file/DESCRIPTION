@@ -5,3 +5,4 @@ Description: File handling functions for processing the results of ISNP experime
 License: MIT
 Author: Andrey Nakin <andrey.nakin@gmail.com>
 Maintainer: Andrey Nakin <andrey.nakin@gmail.com>
+Imports: properties
