@@ -1,6 +1,10 @@
 run.plot <-
   function(data, runProps, seriesProps, legendprop, xprop, mapper, 
-           xlab = NA, ylab = NA, main = NA) {
+           xlab = NA, ylab = NA, main = NA, col = NA) {
+    
+    if (is.na(col)) {
+      col = plot.colors();
+    }
     
     all.values <- vector(mode="numeric", length=0)
     d <- lapply(
@@ -78,7 +82,8 @@ run.plot <-
       y = d[[1]]$y,
       type = 'b', 
       pch=20,
-      ylim = c(y.min, y.max)
+      ylim = c(y.min, y.max),
+      col = col[1]
     )
     arrows(
       d[[1]]$x, 
@@ -87,7 +92,28 @@ run.plot <-
       d[[1]]$y.max, 
       length=0.03, 
       angle=90, 
-      code=3
+      code=3,
+      col = col[1]
+    )
+    
+    leg <- sapply(runProps, function(props) {
+      if (is.null(props)) {
+        return (NA)
+      } else {
+        v <- props[[legendprop]]
+        if (is.null(v)) {
+          return (NA)
+        } else {
+          return (v)
+        }
+      }
+    })
+    
+    legend(
+      "topright", 
+      legend = leg, 
+      pch=20,
+      col = col
     )
     
   }

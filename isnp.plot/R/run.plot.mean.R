@@ -1,7 +1,7 @@
 run.plot.mean <-
-  function(data, runProps, seriesProps, legendprop, xprop, mapper, conf.level = 0.999, xlab = NA, ylab = NA, main = NA) {
+  function(data, runProps, seriesProps, legendprop, xprop, mapper, conf.level = 0.999, xlab = NA, ylab = NA, main = NA, col = NA) {
     run.plot(
-      data, runProps = runProps, seriesProps = seriesProps, legendprop = legendprop, xprop = xprop, xlab = xlab, ylab = ylab, main = main, 
+      data, runProps = runProps, seriesProps = seriesProps, legendprop = legendprop, xprop = xprop, xlab = xlab, ylab = ylab, main = main, col = col,
       mapper = function(df, sp = NULL, rp = NULL) {
         sample <- mapper(df)
         sample.len <- length(sample)
