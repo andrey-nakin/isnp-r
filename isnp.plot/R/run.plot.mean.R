@@ -1,6 +1,6 @@
-run.mean.plot <-
-  function(data, mapper, conf.level = 0.999, xprop, xlab = NA, ylab = NA, main = NA) {
-    run.plot(data, xprop = xprop, xlab = xlab, ylab = ylab, main = main, mapper = function(df) {
+run.plot.mean <-
+  function(data, seriesProps, legendprop, xprop, mapper, conf.level = 0.999, xlab = NA, ylab = NA, main = NA) {
+    run.plot(data, seriesProps = seriesProps, legendprop = legendprop, xprop = xprop, xlab = xlab, ylab = ylab, main = main, mapper = function(df) {
       sample <- mapper(df)
       sample.len <- length(sample)
       sample.mean <- mean(sample)

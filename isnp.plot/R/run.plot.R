@@ -1,4 +1,5 @@
 run.plot <-
-  function(data, mapper, xprop, xlab = NA, ylab = NA, main = NA) {
+  function(data, seriesProps, legendprop, xprop, mapper, 
+           xlab = NA, ylab = NA, main = NA) {
     
   }
