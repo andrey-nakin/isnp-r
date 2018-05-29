@@ -45,7 +45,7 @@ series.hist.plot <-
           col = col[1],
           xlab = xlab, ylab = ylab, main = main
         )
-        arrows(dd$x, dd$y.min, dd$x, dd$y.max, length=0.03, angle=90, code=3, col = col[1])
+        #arrows(dd$x, dd$y.min, dd$x, dd$y.max, length=0.03, angle=90, code=3, col = col[1])
 
         for (seriesNo in seq(from = 2, to = length(runData), by = 1)) {
           dd <- d[[seriesNo]]
@@ -58,7 +58,7 @@ series.hist.plot <-
             pch=20
           )
           
-          arrows(dd$x, dd$y.min, dd$x, dd$y.max, length=0.03, angle=90, code=3, col = col[seriesNo])
+          #arrows(dd$x, dd$y.min, dd$x, dd$y.max, length=0.03, angle=90, code=3, col = col[seriesNo])
         }
         
         leg <- sapply(seriesProps[[runNo]], function(props) {
