@@ -95,6 +95,26 @@ run.plot <-
       col = col[1]
     )
     
+    for (seriesNo in seq(1, length(d), 1)) {
+      lines(
+        x = d[[seriesNo]]$x,
+        y = d[[seriesNo]]$y,
+        type = 'b', 
+        pch=20,
+        col = col[seriesNo]
+      )
+      arrows(
+        d[[seriesNo]]$x, 
+        d[[seriesNo]]$y.min, 
+        d[[seriesNo]]$x, 
+        d[[seriesNo]]$y.max, 
+        length=0.03, 
+        angle=90, 
+        code=3,
+        col = col[seriesNo]
+      )
+    }
+    
     leg <- sapply(runProps, function(props) {
       if (is.null(props)) {
         return (NA)
