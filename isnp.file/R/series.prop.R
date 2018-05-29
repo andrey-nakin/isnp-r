@@ -6,11 +6,16 @@ series.prop <-
       filename <- paste(seriesdir, "series.properties", sep = "/")
       if (file.exists(filename)) {
         props <- properties::read.properties(filename)
-        p <- props[[propname]]
-        if (is.null(p)) {
+        v <- props[[propname]]
+        if (is.null(v)) {
           return (NA)
         } else {
-          return (p)
+          num <- suppressWarnings(as.numeric(v))
+          if (is.na(num)) {
+            return (v)
+          } else {
+            return (num)
+          }
         }
       } else {
         return (NA)

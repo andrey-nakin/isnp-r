@@ -1,5 +1,5 @@
 run.plot <-
-  function(data, runProps, seriesProps, legendprop, xprop, mapper, 
+  function(data, runProps, seriesProps, legendprop, xprop, mapper, plotter = NA,
            xlab = NA, ylab = NA, main = NA, col = NA) {
     
     if (is.na(col)) {
@@ -114,5 +114,9 @@ run.plot <-
       pch=20,
       col = col
     )
+    
+    if (is.function(plotter)) {
+      plotter(d[[1]], runData, sp = seriesProps[[runNo]], rp = runProps[[runNo]])
+    }
     
   }

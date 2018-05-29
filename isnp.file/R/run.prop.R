@@ -5,11 +5,16 @@ run.prop <-
       run.props(basedir),
       function (props) {
         if (is.list(props)) {
-          p <- props[[propname]]
-          if (is.null(p)) {
+          v <- props[[propname]]
+          if (is.null(v)) {
             return (NA)
           } else {
-            return (p)
+            num <- suppressWarnings(as.numeric(v))
+            if (is.na(num)) {
+              return (v)
+            } else {
+              return (num)
+            }
           }
         } else {
           return (NA)
