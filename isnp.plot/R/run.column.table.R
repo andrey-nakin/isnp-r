@@ -2,10 +2,10 @@
 run.column.table <- 
   function(exp.data, rows, cell.builder, header.prop, row.names) {
     df <- data.frame(row.names = row.names)
-    exp.props <- expData$expProps
+    exp.prop <- expData$expProps
     
     for (runNo in seq(1, length(exp.data$data), 1)) {
-      run.props <- expData$runProps[[runNo]]
+      run.prop <- expData$runProps[[runNo]]
       series.props <- expData$seriesProps[[runNo]]
       
       column <- sapply(
@@ -14,14 +14,14 @@ run.column.table <-
           return (cell.builder(
             row = rows[rowNo,],
             run.data = exp.data$data[[runNo]],
-            exp.props = exp.props,
-            run.props = run.props,
+            exp.prop = exp.props,
+            run.prop = run.prop,
             series.props = series.props
           ))
         }
       )
       
-      prop <- run.props[[header.prop]]
+      prop <- run.prop[[header.prop]]
       df[[prop]] = column
     }
     

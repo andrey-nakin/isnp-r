@@ -22,7 +22,7 @@ run.plot <-
             if (is.null(seriesData)) {
               return (list(value = NA, min = NA, max = NA))
             } else {
-              v <- mapper(seriesData, sp = seriesProps[[runNo]][[seriesNo]], rp = runProps[[runNo]])
+              v <- mapper(seriesData, series.prop = seriesProps[[runNo]][[seriesNo]], rp = runProps[[runNo]])
               if (is.list(v)) {
                 return (v)
               } else if (is.numeric(v)) {
