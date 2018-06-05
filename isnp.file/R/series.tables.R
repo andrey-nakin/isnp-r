@@ -1,6 +1,6 @@
 # reads 2d list of data frames
 series.tables <- 
-  function(filename, basedir = ".", header = T, sep = "\t", quote = "\"", dec = ".", colClasses = NA) {
+  function(filename, basedir = ".", header = T, sep = "\t", quote = "\"", dec = ".", colClasses = NA, comment.char = "#") {
     dirs <- series.dirs(basedir)
 
     res <- lapply(
@@ -15,7 +15,7 @@ series.tables <-
             } else {
               filename <- paste(dirname, filename, sep = "/")
               if (file.exists(filename)) {
-                res <- read.table(filename, header = header, sep = sep, quote = quote, dec = dec, colClasses = colClasses)
+                res <- read.table(filename, header = header, sep = sep, quote = quote, dec = dec, colClasses = colClasses, comment.char = comment.char)
                 return (res)
               } else {
                 return (NULL)

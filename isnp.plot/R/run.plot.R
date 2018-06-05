@@ -1,15 +1,19 @@
 run.plot <-
-  function(data, runProps, seriesProps, legendprop, xprop, mapper, plotter = NA,
+  function(exp.data, legendprop, xprop, mapper, plotter = NA,
            xlab = NA, ylab = NA, main = NA, col = NA) {
     
     if (is.na(col)) {
       col = plot.colors();
     }
     
+    data <- exp.data$data
+    runProps <- exp.data$runProps
+    seriesProps <- exp.data$seriesProps
+    
     d <- lapply(
       seq(from = 1, to = length(data), by = 1),
       function(runNo) {
-        runData <- d[[runNo]]
+        runData <- data[[runNo]]
         
         yData <- lapply(
           seq(from = 1, to = length(runData), by = 1),
