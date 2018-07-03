@@ -1,6 +1,6 @@
 run.plot <-
   function(exp.data, legendprop, xprop, mapper, plotter = NA,
-           xlab = NA, ylab = NA, main = NA, col = NA) {
+           xlab = NA, ylab = NA, main = NA, col = NA, legend.position = "topright") {
     
     if (is.na(col)) {
       col = plot.colors();
@@ -133,7 +133,7 @@ run.plot <-
     })
     
     legend(
-      "topright", 
+      legend.position, 
       legend = leg, 
       pch=20,
       col = col

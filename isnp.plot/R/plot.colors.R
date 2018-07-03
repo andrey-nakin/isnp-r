@@ -1,14 +1,16 @@
 plot.colors <-
   function() {
     return (c(
-      "#5DA5DA",
-      "#FAA43A",
-      "#60BD68",
-      "#F17CB0",
-      "#B2912F",
-      "#B276B2",
-      "#DECF3F",
-      "#F15854",
-      "#4D4D4D"
+      "#5cbae6",
+      "#b6d957",
+      "#fac364",
+      "#8cd3ff",
+      "#d998cb",
+      "#98aafb",
+      "#ccc5a8",
+      "#dbdb46",
+      "#f2d249",
+      "#93b9c6",
+      "#52bacc"
     ))
   }

@@ -5,7 +5,9 @@ exp.data <-
       data = data, 
       expProps = exp.props(basedir), 
       runProps = run.props(basedir), 
-      seriesProps = series.props(basedir)
+      seriesProps = series.props(basedir),
+      numOfRuns = length(data),
+      numOfSeries = max(sapply(data, function(run.data) length(run.data)))
     )
     return (data)
   }
