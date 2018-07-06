@@ -6,16 +6,21 @@ exp.array.4d <- function(exp.data, d3, d4, filler) {
   for (runNo in seq(1, exp.data$numOfRuns)) {
     run.data <- exp.data$data[[runNo]]
     numOfSeries <- length(run.data)
-    
+
     if (numOfSeries > 0) {
       for (seriesNo in seq(1, numOfSeries, 1)) {
-        res[runNo, seriesNo,,] <- filler(
-          series.data = run.data[[seriesNo]],
-          exp.prop = exp.data$expProps,
-          run.prop = exp.data$runProps[[runNo]],
-          series.prop = exp.data$seriesProps[[runNo]][[seriesNo]],
-          dim = c(d3, d4)
-        )
+        series.data <- run.data[[seriesNo]]
+        if (!is.null(series.data)) {
+          res[runNo, seriesNo,,] <- filler(
+            series.data = series.data,
+            exp.prop = exp.data$expProps,
+            run.prop = exp.data$runProps[[runNo]],
+            series.prop = exp.data$seriesProps[[runNo]][[seriesNo]],
+            dim = c(d3, d4),
+            runNo = runNo,
+            seriesNo = seriesNo
+          )
+        }
       }
     }
   }
