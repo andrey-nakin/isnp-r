@@ -9,7 +9,7 @@ calc.sample.prob <-
     population.len <- length(population)
     if (!is.na(sample.func)) {
       sample <- sample.func(population)
-    } else if (!is.na(range)) {
+    } else if (!missing(range)) {
       sample <- population[which(population >= range[1] & population < range[2])]
     }
     sample.len <- length(sample)
