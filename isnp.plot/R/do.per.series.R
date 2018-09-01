@@ -5,12 +5,14 @@ do.per.series <-
   function(exp.data, closure) {
     for (runNo in seq(1, exp.data$numOfRuns, 1)) {
       for (seriesNo in seq(1, exp.data$numOfSeries, 1)) {
+        props <- exp.data$expProps
+        props <- append(props, exp.data$runProps[[runNo]])
+        props <- append(props, exp.data$seriesProps[[runNo]][[seriesNo]])
+        
         closure(
           runNo = runNo, 
-          seriesNo = seriesNo, 
-          exp.data = exp.data,
-          run.props = exp.data$runProps[[runNo]], 
-          series.props = exp.data$seriesProps[[runNo]][[seriesNo]]
+          seriesNo = seriesNo,
+          props <- props
         )
       }
     }
