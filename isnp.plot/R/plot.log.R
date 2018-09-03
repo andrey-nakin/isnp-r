@@ -10,23 +10,23 @@ plot.log <-
       col <- plot.colors()[1]
     }
     
-    xx <- x[which(x > 0)]
     y.indices <- which(y > 0)
+    xx <- x[y.indices]
     yy <- y[y.indices]
 
     if (missing(ylim)) {
       if (!missing(y.min) && !missing(y.max)) {
-        ylim = c(min(y.min), max(y.max))
+        ylim = c(min(y.min[which(y.min > 0)]), max(y.max))
       } else {
-        ylim = c(min(y), max(y))
+        ylim = c(min(y[which(y > 0)]), max(y))
       }
     }
     
-    ticks.major.lim <- c(floor(log10(min(xx))) - 2, floor(log10(max(xx))) + 2)
+    ticks.major.lim <- c(floor(log10(min(xx))), floor(log10(max(xx))) + 1)
     ticks.major.x <- 10^(ticks.major.lim[1] : ticks.major.lim[2])
     ticks.minor.x <- rep(1:9, length(ticks.major.x)) * (10^rep(ticks.major.lim[1] : ticks.major.lim[2], each=9))
     
-    ticks.major.lim <- c(floor(log10(ylim[1])) - 2, floor(log10(ylim[2])) + 2)
+    ticks.major.lim <- c(floor(log10(ylim[1])) - 1, floor(log10(ylim[2])) + 1)
     ticks.major.y <- 10^(ticks.major.lim[1] : ticks.major.lim[2])
     ticks.minor.y <- rep(1:9, length(ticks.major.y)) * (10^rep(ticks.major.lim[1] : ticks.major.lim[2], each=9))
     

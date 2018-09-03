@@ -98,17 +98,19 @@ plot.per.run <-
         col = col[1]
       )
       
-      nv <- lapply(2 : numOfSeries, function(seriesNo) {
-        if (!is.null(data[[seriesNo]])) {
-          lines(
-            x = data[[seriesNo]]$x,
-            y = data[[seriesNo]]$y,
-            type = type,
-            pch = pch,
-            col = col[seriesNo]
-          )
-        }
-      })
+      if (numOfSeries > 1) {
+        nv <- lapply(2 : numOfSeries, function(seriesNo) {
+          if (!is.null(data[[seriesNo]])) {
+            lines(
+              x = data[[seriesNo]]$x,
+              y = data[[seriesNo]]$y,
+              type = type,
+              pch = pch,
+              col = col[seriesNo]
+            )
+          }
+        })
+      }
 
       if (!is.null(plotter.func)) {
         plotter.func(

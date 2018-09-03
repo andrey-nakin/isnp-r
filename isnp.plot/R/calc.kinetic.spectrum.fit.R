@@ -11,9 +11,9 @@ calc.kinetic.spectrum.fit <-
         return (NA)
       }
       
-      xx <- x[which(x >= 1)]
-      yy <- y[which(x >= 1)]
-      
+      xx <- x[which(x >= 1 & y > 0)]
+      yy <- y[which(x >= 1 & y > 0)]
+
       df <- data.frame(x = xx, y = log10(yy))
       fit <- nls(y ~ calc.gneis.spectrum.log.approx(x, a), data = df, start = list(a = 0.1))
       
