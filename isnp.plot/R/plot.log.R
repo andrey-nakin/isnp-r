@@ -2,6 +2,10 @@
 plot.log <-
   function(x, y, type = 'b', pch = 20, xlab = NA, ylab = NA, main = NA, y.min = NA, y.max = NA, col = NA, ylim = NA) {
     
+    if (is.na(min(y))) {
+      return()
+    }
+    
     if (is.na(col)) {
       col <- plot.colors()[1]
     }
