@@ -1,8 +1,11 @@
 # Analyze neutron spectrum, compare it to GNEIS approximation function
-analyze.gneis.spectrum <- 
-  function(exp.data, range, breakNum, conf.level, series.prop, series.prop.title = NA, detector.square = NA, adjust.range = T, fit.range) {
-
+analyze.gneis.full.spectrum <- 
+  function(exp.data, breakNum, conf.level, series.prop, series.prop.title = NA, detector.square = NA, adjust.range = T) {
+    
+    range <- c(1, 1000)
+    fit.range <- c(1, 800)
     col <- plot.colors()
+    
     calc.error <- function(y, approx) {
       return (
         y / approx - 1
@@ -13,7 +16,15 @@ analyze.gneis.spectrum <-
       series.prop.title <- series.prop
     }
     
-    my.spectra <- calc.kinetic.spectrum(exp.data, range = range, breakNum = breakNum, adjust.range = adjust.range, conf.level = conf.level, detector.square = detector.square)
+    my.spectra.10 <- calc.kinetic.spectrum(exp.data, range = c(0, 10.0), breakNum = breakNum, adjust.range = adjust.range, conf.level = conf.level, detector.square = detector.square)
+    my.spectra.100 <- calc.kinetic.spectrum(exp.data, range = c(0, 100.0), breakNum = breakNum, adjust.range = adjust.range, conf.level = conf.level, detector.square = detector.square)
+    my.spectra.1000 <- calc.kinetic.spectrum(exp.data, range = c(0, 1000.0), breakNum = breakNum, adjust.range = adjust.range, conf.level = conf.level, detector.square = detector.square)
+    d <- dim(my.spectra.10)
+    my.spectra <- array(NA, dim = c(d[1], d[2], d[3], 271))
+    my.spectra[, , , 1:90] <- my.spectra.10[, , , 10:99]
+    my.spectra[, , , 91:180] <- my.spectra.100[, , , 10:99]
+    my.spectra[, , , 181:271] <- my.spectra.1000[, , , 10:100]
+
     my.approx.a <- calc.kinetic.spectrum.fit(exp.data, my.spectra)
     
     my.plotter <- function(runNo, seriesNo, props, ...) {
@@ -112,7 +123,7 @@ analyze.gneis.spectrum <-
         )
       }
     )
-    
+
     do.per.run(exp.data, function(runNo, numOfSeries, props, series.props.list, ...) {
       
       x <- lapply(series.props.list, function(props) as.numeric(props[[series.prop]]))

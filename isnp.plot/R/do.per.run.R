@@ -11,7 +11,8 @@ do.per.run <-
         runNo = runNo, 
         numOfSeries = exp.data$numOfSeries,
         props = props,
-        exp.data = exp.data
+        exp.data = exp.data,
+        series.props.list = exp.data$seriesProps[[runNo]]
       )
     }
   }
