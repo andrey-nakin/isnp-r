@@ -1,16 +1,11 @@
-# Builds experiment plots, one per run, every plot displays multiple graphs, one per series
-plot.per.run <-
-  function(exp.data, data.func, legend.prop = NA, legend.prop.title = NA, main.func = NULL, plotter.func = NULL, xlab = NA, ylab = NA, log = NA, col = NA, type = 'b', pch = 20, legend.position = "topright") {
-    
-    if (is.na(legend.prop.title)) {
-      legend.prop.title <- legend.prop
-    }
+plot.per.series <-
+  function(exp.data, data.func, main.func = NULL, plotter.func = NULL, xlab = NA, ylab = NA, log = NA, col = NA, type = 'b', pch = 20) {
     
     if (is.na(col)) {
       col = plot.colors();
     }
     
-    do.per.run(exp.data, function(runNo, numOfSeries, props, exp.data, ...) {
+    do.per.series(exp.data, function(runNo, numOfSeries, props, exp.data, ...) {
       
       data <- lapply(1 : numOfSeries, function(seriesNo) {
         res <- data.func(
@@ -18,7 +13,7 @@ plot.per.run <-
           seriesNo = seriesNo
         )
       })
-
+      
       x.min <- Reduce(function(a, b) {
         if (is.null(b)) {
           return (a)
@@ -31,7 +26,7 @@ plot.per.run <-
           }
         }
       }, data, NA)
-
+      
       x.max <- Reduce(function(a, b) {
         if (is.null(b)) {
           return (a)
@@ -115,7 +110,7 @@ plot.per.run <-
           }
         })
       }
-
+      
       if (!is.null(plotter.func)) {
         plotter.func(
           runNo = runNo,
@@ -123,7 +118,7 @@ plot.per.run <-
           ylim = ylim
         )
       }
-            
+      
       grid(NULL, NULL, lty = 1, col = "cornsilk2")
       
       if (!is.na(legend.prop)) {
@@ -141,7 +136,7 @@ plot.per.run <-
             }
           }
         })
-
+        
         legend(
           legend.position, 
           legend = leg, 

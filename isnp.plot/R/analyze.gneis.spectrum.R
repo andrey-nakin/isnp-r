@@ -1,8 +1,12 @@
 # Analyze neutron spectrum, compare it to GNEIS approximation function
 analyze.gneis.spectrum <- 
-  function(exp.data, range, breakNum, conf.level) {
+  function(exp.data, range, breakNum, conf.level, series.prop, series.prop.title = NA, detector.square = NA, adjust.range = T, fit.range) {
     
-    my.spectra <- calc.kinetic.spectrum(exp.data, range = range, breakNum = breakNum, adjust.range = T, conf.level = conf.level)
+    if (is.na(series.prop.title)) {
+      series.prop.title <- series.prop
+    }
+    
+    my.spectra <- calc.kinetic.spectrum(exp.data, range = range, breakNum = breakNum, adjust.range = adjust.range, conf.level = conf.level, detector.square = detector.square)
     my.approx.a <- calc.kinetic.spectrum.fit(exp.data, my.spectra)
     
     my.plotter <- function(runNo, seriesNo, props, ...) {
@@ -22,14 +26,14 @@ analyze.gneis.spectrum <-
         main = paste(
           range.to.string(range),
           paste("PL", props$PhysicsList, sep="="),
-          paste("X", props$X, sep="="),
+          paste(series.prop.title, props[[series.prop]], sep="="),
           sep = ", "
         )
       )
       
       f.approx <- function(e) calc.gneis.spectrum.approx(e, a = my.approx.a[runNo, seriesNo])
-      fx <- x[which(x >= 1 & y > 0)]
-      fy <- y[which(x >= 1 & y > 0)]
+      fx <- x[which(x >= fit.range[1] & x < fit.range[2] & y > 0)]
+      fy <- y[which(x >= fit.range[1] & x < fit.range[2] & y > 0)]
       e <- log10(fy) - log10(f.approx(fx))
       e.rms <- calc.rmsd(e)
       
@@ -64,7 +68,8 @@ analyze.gneis.spectrum <-
     
     plot.per.run(
       exp.data,
-      legend.prop = "X",
+      legend.prop = series.prop,
+      legend.prop.title = series.prop.title,
       log = "x",
       xlab = "Energy, MeV",
       ylab = "Relative Approximation Error",
@@ -81,8 +86,8 @@ analyze.gneis.spectrum <-
         x <- my.spectra[runNo, seriesNo, 1, ]
         y <- my.spectra[runNo, seriesNo, 2, ]
         f.approx <- function(e) calc.gneis.spectrum.approx(e, a = my.approx.a[runNo, seriesNo])
-        fx <- x[which(x >= 1 & y > 0)]
-        fy <- y[which(x >= 1 & y > 0)]
+        fx <- x[which(x >= fit.range[1] & x < fit.range[2] & y > 0)]
+        fy <- y[which(x >= fit.range[1] & x < fit.range[2] & y > 0)]
         delta <- fy / f.approx(fx) - 1
         return (list(
           x = fx,

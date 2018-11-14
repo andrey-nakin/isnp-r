@@ -12,7 +12,8 @@ do.per.series <-
         closure(
           runNo = runNo, 
           seriesNo = seriesNo,
-          props <- props
+          props = props,
+          series.data = exp.data$data[[runNo]][[seriesNo]]
         )
       }
     }

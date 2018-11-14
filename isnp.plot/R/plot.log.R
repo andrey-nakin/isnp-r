@@ -1,6 +1,6 @@
 # Draw a plot with 2 logarithmic axes
 plot.log <-
-  function(x, y, type = 'b', pch = 20, xlab = NA, ylab = NA, main = NA, y.min = NA, y.max = NA, col = NA, ylim = NA) {
+  function(x, y, type = 'b', pch = 20, xlab = NA, ylab = NA, main = NA, y.min = NA, y.max = NA, col = NA, ylim = NA, lty = NULL, lwd = "") {
     
     if (is.na(min(y))) {
       return()
@@ -41,7 +41,9 @@ plot.log <-
       xlab = xlab,
       ylab = ylab,
       main = main,
-      axes = F
+      axes = F,
+      lty = lty,
+      lwd = lwd
     )
     
     axis(side = 1, at = ticks.minor.x, labels=NA, tcl = par("tcl") * 0.5)
