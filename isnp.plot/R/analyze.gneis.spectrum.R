@@ -1,6 +1,6 @@
 # Analyze neutron spectrum, compare it to GNEIS approximation function
 analyze.gneis.spectrum <- 
-  function(exp.data, range, breakNum, conf.level, series.prop, series.prop.title = NA, detector.square = NA, adjust.range = T, fit.range) {
+  function(exp.data, range, breakNum, conf.level, series.prop = NULL, series.prop.title = NA, detector.square = NA, adjust.range = T, fit.range) {
 
     col <- plot.colors()
     calc.error <- function(y, approx) {
@@ -112,37 +112,38 @@ analyze.gneis.spectrum <-
         )
       }
     )
-    
-    do.per.run(exp.data, function(runNo, numOfSeries, props, series.props.list, ...) {
-      
-      x <- lapply(series.props.list, function(props) as.numeric(props[[series.prop]]))
-      y <- lapply(1:numOfSeries, function(seriesNo) {
-        x <- my.spectra[runNo, seriesNo, 1, ]
-        y <- my.spectra[runNo, seriesNo, 2, ]
-        f.approx <- function(e) calc.gneis.spectrum.approx(e, a = my.approx.a[runNo, seriesNo])
-        idx <- which(x >= fit.range[1] & x < fit.range[2] & y > 0)
-        fx <- x[idx]
-        fy <- y[idx]
-        delta <- calc.error(fy, f.approx(fx))
-        return (calc.rmsd(delta))
+   
+    if (!is.null(series.prop) && !is.na(as.numeric(exp.data$seriesProps[[1]][[1]][[series.prop]]))) {
+      do.per.run(exp.data, function(runNo, numOfSeries, props, series.props.list, ...) {
+        
+        x <- lapply(series.props.list, function(props) as.numeric(props[[series.prop]]))
+        y <- lapply(1:numOfSeries, function(seriesNo) {
+          x <- my.spectra[runNo, seriesNo, 1, ]
+          y <- my.spectra[runNo, seriesNo, 2, ]
+          f.approx <- function(e) calc.gneis.spectrum.approx(e, a = my.approx.a[runNo, seriesNo])
+          idx <- which(x >= fit.range[1] & x < fit.range[2] & y > 0)
+          fx <- x[idx]
+          fy <- y[idx]
+          delta <- calc.error(fy, f.approx(fx))
+          return (calc.rmsd(delta))
+        })
+        
+        plot(
+          x = x,
+          y = y,
+          type = 'b',
+          pch = 20,
+          col = col[1],
+          main = paste(
+            "RMS Error",
+            range.to.string(range),
+            paste("PL", props$PhysicsList, sep="="),
+            sep = ", "
+          ),
+          xlab = series.prop,
+          ylab = "RMS Error"
+        )
       })
-      
-      plot(
-        x = x,
-        y = y,
-        type = 'b',
-        pch = 20,
-        col = col[1],
-        main = paste(
-          "RMS Error",
-          range.to.string(range),
-          paste("PL", props$PhysicsList, sep="="),
-          sep = ", "
-        ),
-        xlab = series.prop,
-        ylab = "RMS Error"
-      )
-      
-    })
+    } 
 
   }
